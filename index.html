@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Shift Sindh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="site-header">
+            <img class="logo" src="assets/images/Logo.jpg" alt="">
+            <a href="#" class="logo-text"><span>Ayrina </span>- <span class="brand" data-i18n="brand">Field Shift
+                    Sindh</span></a>
+            <ul>
+                <li><a href="#explorer" data-i18n="nav_map">Map</a></li>
+                <li><a href="#water" data-i18n="nav_water">Water</a></li>
+                <li><a href="#soilcheck" data-i18n="nav_soil">Soil</a></li>
+                <li><a href="#plan" data-i18n="nav_plan">Plan</a></li>
+                <li>
+                    <a href="#data" data-i18n="nav_data">NASA Data</a>
+                    <ul>
+                        <li><a href="#data" data-i18n="nav_what">What we use</a></li>
+                        <li><a href="#limits" data-i18n="nav_limits">Limits</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="lang" role="group" aria-label="Language">
+                <button id="langEn" type="button" class="on">EN</button>
+                <button id="langUr" type="button">اردو</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section1">
+            <div class="heading-image">
+                <h1><span data-i18n="hero1">Right crop.</span><br><span data-i18n="hero2">Right water.</span><br><span
+                        class="color-word" data-i18n="hero3">Right time.</span></h1>
+            </div>
+            <p class="hero-p" data-i18n="hero_short"></p>
+            <div class="hero-buttons">
+                <a href="#water" class="hero-btn">
+                    <span class="hero-icon">💧</span>
+                    <strong data-i18n="hero_b1">Do I need to water?</strong>
+                    <small data-i18n="hero_b1x">Check this week's soil wetness and rain</small>
+                </a>
+                <a href="#soilcheck" class="hero-btn">
+                    <span class="hero-icon">🌱</span>
+                    <strong data-i18n="hero_b2">Is my soil at risk?</strong>
+                    <small data-i18n="hero_b2x">Check for conditions that build up salt</small>
+                </a>
+                <a href="#plan" class="hero-btn">
+                    <span class="hero-icon">🌾</span>
+                    <strong data-i18n="hero_b3">What should I plant next?</strong>
+                    <small data-i18n="hero_b3x">Get the top 3 crops for next season</small>
+                </a>
+            </div>
+            <a href="#explorer" class="map-link" data-i18n="hero_map">🗺️ Or pick your spot on the map</a>
+        </section>
+
+        <section class="section2" id="explorer">
+            <div class="problem">
+                <h3 data-i18n="problem_t">⚠️ The problem</h3>
+                <p data-i18n="hero_p"></p>
+            </div>
+            <h2 data-i18n="map_title">🗺️ District Explorer</h2>
+            <p class="sub" data-i18n="map_sub"></p>
+
+            <div class="explorer">
+                <div id="map" class="map" aria-label="Map of Sindh districts"></div>
+
+                <aside class="map-panel">
+                    <div class="map-pick">
+                        <p class="answer-label" data-i18n="map_selected">Selected district</p>
+                        <h3 id="mapName">-</h3>
+                        <p id="mapInfo" class="map-info"></p>
+                        <div class="map-go">
+                            <button type="button" data-go="water" data-i18n="map_go_water">💧 Check water</button>
+                            <button type="button" data-go="soil" data-i18n="map_go_soil">🌱 Check soil</button>
+                            <button type="button" data-go="plan" data-i18n="map_go_plan">🌾 Plan crop</button>
+                        </div>
+                    </div>
+
+                    <div class="legend">
+                        <span><i class="dot upper"></i><span data-i18n="grp_upper">Upper Sindh</span></span>
+                        <span><i class="dot central"></i><span data-i18n="grp_central">Central Sindh</span></span>
+                        <span><i class="dot lower"></i><span data-i18n="grp_lower">Lower Sindh</span></span>
+                    </div>
+
+                    <h4 data-i18n="map_how_t">How the map connects to the tools</h4>
+                    <ol class="map-how">
+                        <li data-i18n="map_how_1"></li>
+                        <li data-i18n="map_how_2"></li>
+                        <li data-i18n="map_how_3"></li>
+                    </ol>
+                    <p class="map-note" data-i18n="map_note"></p>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section3" id="water">
+            <h2 data-i18n="water_title">💧 Water check</h2>
+            <p class="sub" data-i18n="water_sub">Should you water your field this week?</p>
+
+            <div class="controls">
+                <select id="waterDistrict" aria-label="District"></select>
+                <button id="waterBtn" type="button" data-i18n="btn_water">Check water</button>
+            </div>
+            <p id="waterStatus" class="status"></p>
+
+            <div id="waterResults" class="hidden">
+                <div class="answer" id="waterAnswerBox">
+                    <p class="answer-label" data-i18n="cond_week">This week</p>
+                    <h3 id="waterAnswer"></h3>
+                    <p class="why" id="waterWhy"></p>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <p>🌱 <span data-i18n="cond_soil">Soil wetness</span></p>
+                        <h4 id="wSoil">-</h4><span data-i18n="src_power">NASA POWER</span>
+                    </div>
+                    <div class="stat">
+                        <p>🌧️ <span data-i18n="cond_rain">Rain, last 90 days</span></p>
+                        <h4 id="wRainPast">-</h4><span data-i18n="src_power">NASA POWER</span>
+                    </div>
+                    <div class="stat">
+                        <p>☔ <span data-i18n="cond_rain_next">Rain, next 3 days</span></p>
+                        <h4 id="wRainNext">-</h4><span data-i18n="src_om">Open-Meteo forecast</span>
+                    </div>
+                </div>
+                <p class="note" id="waterDate"></p>
+            </div>
+        </section>
+
+        <!-- ===== SOIL CHECK (salt-risk conditions) ===== -->
+        <section class="section4" id="soilcheck">
+            <h2 data-i18n="soil_title">🌱 Soil check</h2>
+            <p class="sub" data-i18n="soil_sub">Are conditions raising the risk of salt building up in your soil?</p>
+
+            <div class="controls">
+                <select id="soilDistrict" aria-label="District"></select>
+                <button id="soilBtn" type="button" data-i18n="btn_soil">Check soil</button>
+                <button id="floodBtn" type="button" class="flood-btn" data-i18n="btn_flood">🌊 2022 floods
+                    example</button>
+            </div>
+            <p id="soilStatus" class="status"></p>
+
+            <div id="soilResults" class="hidden">
+                <div id="floodBanner" class="flood-banner hidden">
+                    <h3 data-i18n="flood_t">🌊 Looking back: Dadu during the 2022 floods</h3>
+                    <p data-i18n="flood_x"></p>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <p id="sSoilLabel">🌱 Soil wetness</p>
+                        <h4 id="sSoil">-</h4><span data-i18n="src_power">NASA POWER</span>
+                    </div>
+                    <div class="stat">
+                        <p id="sTempLabel">🌡️ Hottest day, last 90 days</p>
+                        <h4 id="sTemp">-</h4><span data-i18n="src_power">NASA POWER</span>
+                    </div>
+                    <div class="stat">
+                        <p id="sRainLabel">🌧️ Rain, last 90 days</p>
+                        <h4 id="sRainPast">-</h4><span id="sRainUsual">NASA POWER</span>
+                    </div>
+                </div>
+                <div class="salt" id="saltBox">
+                    <h3 id="saltTitle"></h3>
+                    <p id="saltText"></p>
+                    <p class="why" id="saltWhy"></p>
+                </div>
+                <p class="note" id="soilDate"></p>
+                <a href="#plan" class="next-link" data-i18n="soil_next">Next: plan your next crop ↓</a>
+            </div>
+        </section>
+
+        <!-- ===== PLAN YOUR NEXT CROP ===== -->
+        <section class="section6" id="plan">
+            <h2 data-i18n="plan_title">🌾 Plan your next crop</h2>
+            <p class="sub" data-i18n="plan_sub"></p>
+
+            <div class="controls">
+                <label><span data-i18n="lbl_district">District</span>
+                    <select id="planDistrict"></select></label>
+                <label><span data-i18n="lbl_current">What is growing now (or planned)?</span>
+                    <select id="planCrop"></select></label>
+                <button id="planBtn" type="button" data-i18n="btn_plan">Get my plan</button>
+            </div>
+            <p id="planStatus" class="status"></p>
+
+            <div id="planResults" class="hidden">
+                <div id="planConditions"></div>
+                <div id="planRecs"></div>
+                <div id="planHistory"></div>
+                <p class="note" id="planDate"></p>
+            </div>
+        </section>
+
+        <!-- ===== NASA DATA + LIMITS ===== -->
+        <section class="section5" id="data">
+            <article>
+                <h2>NASA data we use</h2>
+                <ul>
+                    <li><strong>Soil wetness (GWETROOT):</strong> how wet the top 1 m of soil is, from 0 (dry) to 1
+                        (saturated). Source: NASA POWER, from NASA's MERRA-2 model.</li>
+                    <li><strong>Rainfall (PRECTOTCORR):</strong> daily rainfall in mm. Source: NASA POWER.</li>
+                    <li><strong>Maximum temperature (T2M_MAX):</strong> daily highest air temperature, 2 m above the
+                        ground. Source: NASA POWER.</li>
+                    <li><strong>Rain forecast:</strong> rain expected over the next 3 days. Source: Open-Meteo (not NASA
+                        data).</li>
+                </ul>
+                <p class="note">We use the last 90 days of daily data for each district.</p>
+            </article>
+
+            <article id="limits">
+                <h2>Limits</h2>
+                <ul>
+                    <li>NASA POWER data covers areas about 50 km wide, so it estimates conditions for a region, not an
+                        individual field.</li>
+                    <li>We flag conditions linked to salt build-up; we don't measure salt or soil nutrients.</li>
+                    <li>The most recent few days of NASA data may not be available yet.</li>
+                    <li>Our rules are simple and meant for exploring options, not final advice. Check with a local
+                        agriculture expert before making decisions.</li>
+                </ul>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p class="foot" data-i18n="foot"></p>
+    </footer>
+
+    <!-- ===== FIELD HELPER CHATBOT (English only) ===== -->
+    <button id="chatToggle" class="chat-toggle" type="button" data-i18n="chat_toggle">💬 Ask</button>
+
+    <div id="chatBox" class="chat-box hidden">
+        <div class="chat-head">
+            <span data-i18n="chat_head">🌾 Field Helper</span>
+            <button id="chatClose" type="button">✕</button>
+        </div>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div id="chatChips" class="chat-chips"></div>
+        <form id="chatForm" class="chat-form">
+            <input id="chatInput" type="text" placeholder="Ask about water, soil, crops..." autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+    <script src="assets/vendor/leaflet/leaflet.js"></script>
+    <script src="assets/js/map.js"></script>
+</body>
+
+</html>
